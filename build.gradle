@@ -30,7 +30,7 @@ dependencies {
 
     modImplementation "fi.dy.masa.malilib:malilib-fabric-1.17.0:${project.malilib_version}"
 
-    modImplementation "com.github.DarkKronicle:AdvancedChatCore:v1.0.1-beta1"
+    modImplementation "com.github.DarkKronicle:AdvancedChatCore:${project.advancedchat_version}"
 
     shadow 'com.google.code.findbugs:jsr305:3.0.0'
 
