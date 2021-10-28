@@ -13,12 +13,10 @@ import fi.dy.masa.malilib.util.JsonUtils;
 import fi.dy.masa.malilib.util.StringUtils;
 import io.github.darkkronicle.acmoduletemplate.ACModuleTemplate;
 import io.github.darkkronicle.advancedchatcore.config.ConfigStorage;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import java.io.File;
 import java.util.List;
-
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class ModuleConfigStorage implements IConfigHandler {
@@ -34,22 +32,30 @@ public class ModuleConfigStorage implements IConfigHandler {
             return StringUtils.translate("advancedchat.module.config.general." + key);
         }
 
-        public final static ConfigStorage.SaveableConfig<ConfigString> STRING_STUFF = ConfigStorage.SaveableConfig.fromConfig("string_stuff",
-                new ConfigString(translate("string_stuff"), "Very cool string stuff", translate("info.string_stuff")));
+        public static final ConfigStorage.SaveableConfig<ConfigString> STRING_STUFF =
+                ConfigStorage.SaveableConfig.fromConfig(
+                        "string_stuff",
+                        new ConfigString(
+                                translate("string_stuff"),
+                                "Very cool string stuff",
+                                translate("info.string_stuff")));
 
-        public final static ConfigStorage.SaveableConfig<ConfigBoolean> YES = ConfigStorage.SaveableConfig.fromConfig("yes",
-                new ConfigBoolean(translate("yes"), true, translate("info.yes")));
+        public static final ConfigStorage.SaveableConfig<ConfigBoolean> YES =
+                ConfigStorage.SaveableConfig.fromConfig(
+                        "yes", new ConfigBoolean(translate("yes"), true, translate("info.yes")));
 
-        public final static ImmutableList<ConfigStorage.SaveableConfig<? extends IConfigBase>> OPTIONS = ImmutableList.of(
-                STRING_STUFF,
-                YES
-        );
-
+        public static final ImmutableList<ConfigStorage.SaveableConfig<? extends IConfigBase>>
+                OPTIONS = ImmutableList.of(STRING_STUFF, YES);
     }
 
     public static void loadFromFile() {
 
-        File configFile = FileUtils.getConfigDirectory().toPath().resolve("advancedchat").resolve(CONFIG_FILE_NAME).toFile();
+        File configFile =
+                FileUtils.getConfigDirectory()
+                        .toPath()
+                        .resolve("advancedchat")
+                        .resolve(CONFIG_FILE_NAME)
+                        .toFile();
 
         if (configFile.exists() && configFile.isFile() && configFile.canRead()) {
             JsonElement element = ConfigStorage.parseJsonFile(configFile);
@@ -57,10 +63,12 @@ public class ModuleConfigStorage implements IConfigHandler {
             if (element != null && element.isJsonObject()) {
                 JsonObject root = element.getAsJsonObject();
 
-                ConfigStorage.readOptions(root, General.NAME, (List<ConfigStorage.SaveableConfig<?>>) General.OPTIONS);
+                ConfigStorage.readOptions(
+                        root,
+                        General.NAME,
+                        (List<ConfigStorage.SaveableConfig<?>>) General.OPTIONS);
 
                 int version = JsonUtils.getIntegerOrDefault(root, "configVersion", 0);
-
             }
         }
     }
@@ -71,7 +79,8 @@ public class ModuleConfigStorage implements IConfigHandler {
         if ((dir.exists() && dir.isDirectory()) || dir.mkdirs()) {
             JsonObject root = new JsonObject();
 
-            ConfigStorage.writeOptions(root, General.NAME, (List<ConfigStorage.SaveableConfig<?>>) General.OPTIONS);
+            ConfigStorage.writeOptions(
+                    root, General.NAME, (List<ConfigStorage.SaveableConfig<?>>) General.OPTIONS);
 
             root.add("config_version", new JsonPrimitive(CONFIG_VERSION));
 
@@ -88,5 +97,4 @@ public class ModuleConfigStorage implements IConfigHandler {
     public void save() {
         saveFromFile();
     }
-
 }

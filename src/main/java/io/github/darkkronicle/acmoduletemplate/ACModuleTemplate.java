@@ -15,5 +15,4 @@ public class ACModuleTemplate implements ClientModInitializer {
         // This will run after AdvancedChatCore's because of load order
         InitializationHandler.getInstance().registerInitializationHandler(new ModuleInitHandler());
     }
-
 }
