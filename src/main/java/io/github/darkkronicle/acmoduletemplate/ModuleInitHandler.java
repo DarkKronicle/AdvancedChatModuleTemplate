@@ -2,7 +2,6 @@ package io.github.darkkronicle.acmoduletemplate;
 
 import fi.dy.masa.malilib.config.ConfigManager;
 import fi.dy.masa.malilib.interfaces.IInitializationHandler;
-import fi.dy.masa.malilib.util.StringUtils;
 import io.github.darkkronicle.acmoduletemplate.config.ModuleConfigStorage;
 import io.github.darkkronicle.advancedchatcore.chat.ChatHistory;
 import io.github.darkkronicle.advancedchatcore.config.gui.GuiConfigHandler;
@@ -25,11 +24,12 @@ public class ModuleInitHandler implements IInitializationHandler {
 
         // Register on new message
         ChatHistory.getInstance()
-                .addOnUpdate((message, type) -> {
-                    if (type == IChatMessageProcessor.UpdateType.ADDED) {
-                        System.out.println("Chat message happened!");
-                    }
-                });
+                .addOnUpdate(
+                        (message, type) -> {
+                            if (type == IChatMessageProcessor.UpdateType.ADDED) {
+                                System.out.println("Chat message happened!");
+                            }
+                        });
         // Register on the clear
         ChatHistory.getInstance()
                 .addOnClear(
